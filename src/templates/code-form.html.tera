@@ -1,0 +1,32 @@
+{% extends "base" %}
+
+{% block content %}
+
+<h1 class="mt-5 mb-4">Home Distance&nbsp;Vision Assessment&nbsp;Aid</h1>
+<p class="mb-4"><a href="/">&larr; Return to the homepage</a></p>
+<hr class="mt-4" />
+{% if error %}
+    <div class="alert alert-danger">
+        <p>The code that you entered was not valid. Please check it and try again.</p>
+        <p>If you believe this is an error, please contact the author quoting your code and error message below.</p>
+        <p>{{error}}</p>
+    </div>
+{% endif %}
+<h3 class="mb-3">View an answer sheet</h3>
+<p>To view the correct answer for a particular test, please enter the test code below.</p>
+<p>The test code is either 6 characters long (e.g. RFD-CAM) or 16 characters long (FFT7-CVBJ-8ZV8-ALWE).</p>
+<form action="/answers" method="get">
+    <div class="form-group row"><label class="col-sm-2 col-form-label" for="code">Code:</label>
+        <div class="col-sm-10"><input class="form-control" type="text" id="code" name="code" /></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10"><small class="form-text text-muted" id="codeHelp">It doesn't matter whether or not you enter the dashes/spaces.</small></div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-10"><button class="btn btn-primary" type="submit" value="Submit">Submit</button></div>
+    </div>
+</form>
+
+{% endblock content %} 
+
+

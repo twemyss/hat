@@ -10,8 +10,10 @@ serde = { version = "1.0", features = ["derive"] }
 serde_derive = "1.0"
 serde_json = "1.0"
 chrono = { version = "0.4", features = ["serde"] }
+rand = "0.7.3"
+ux = "0.1.3"
 
 [dependencies.rocket_contrib]
 version = "0.4.5"
 default-features = false
-features = ["json", "uuid"]
+features = ["json", "uuid", "tera_templates", "serve"]

@@ -1,0 +1,98 @@
+<script type="text/javascript">
+    window.onload = function() {
+            var letterBox = document.getElementById("numLettersRead");
+            letterBox.addEventListener("keyup", function (evt) {
+                updateScore();
+            }, false);
+            letterBox.addEventListener("change", function (evt) {
+                updateScore();
+            }, false);
+        }
+    function updateScore() {
+        var letterBox = document.getElementById("numLettersRead");
+        if (letterBox.value === null || letterBox.value === "") {
+            // Hide the score text
+            document.getElementById("result").style.display = "none";
+        } else {
+            if (letterBox.value > 18 || letterBox.value < 0) {
+                document.getElementById("result").style.display = "block";
+                document.getElementById("result").innerHTML = "The number of correctly read letters must be between 0 and 18 (inclusive).";
+                document.getElementById("result").classList.remove("alert-primary");
+                document.getElementById("result").classList.add("alert-danger");
+            } else {
+                // Update the score text
+                document.getElementById("result").style.display = "block";
+                var score = letterBox.value;
+                var viewDistance = document.querySelector('input[name="viewDistance"]:checked').value;
+                var scores = {
+                    150: {
+                        0: "Home-based estimation of vision was consistent with an acuity of less than 1.3 logMAR (3/60)",
+                        1: "Home-based estimation of vision was consistent with an acuity of at least 1.3 logMAR (3/60), although not as good as 1.0 logMAR (6/60)",
+                        2: "Home-based estimation of vision was consistent with an acuity of at least 1.3 logMAR (3/60), although not as good as 1.0 logMAR (6/60)",
+                        3: "Home-based estimation of vision was consistent with an acuity of at least 1.3 logMAR (3/60), although not as good as 1.0 logMAR (6/60)",
+                        4: "Home-based estimation of vision was consistent with an acuity of at least 1.0 logMAR (6/60), although not as good as 0.7 logMAR (6/30)",
+                        5: "Home-based estimation of vision was consistent with an acuity of at least 1.0 logMAR (6/60), although not as good as 0.7 logMAR (6/30)",
+                        6: "Home-based estimation of vision was consistent with an acuity of at least 1.0 logMAR (6/60), although not as good as 0.7 logMAR (6/30)",
+                        7: "Home-based estimation of vision was consistent with an acuity of at least 1.0 logMAR (6/60), although not as good as 0.7 logMAR (6/30)",
+                        8: "Home-based estimation of vision was consistent with an acuity of at least 0.7 logMAR (6/30), although not as good as 0.4 logMAR (6/15)",
+                        9: "Home-based estimation of vision was consistent with an acuity of at least 0.7 logMAR (6/30), although not as good as 0.4 logMAR (6/15)",
+                        10: "Home-based estimation of vision was consistent with an acuity of at least 0.7 logMAR (6/30), although not as good as 0.4 logMAR (6/15)",
+                        11: "Home-based estimation of vision was consistent with an acuity of at least 0.7 logMAR (6/30), although not as good as 0.4 logMAR (6/15)",
+                        12: "Home-based estimation of vision was consistent with an acuity of at least 0.4 logMAR (6/15), although not as good as 0.1 logMAR (6/7.5)",
+                        13: "Home-based estimation of vision was consistent with an acuity of at least 0.4 logMAR (6/15), although not as good as 0.1 logMAR (6/7.5)",
+                        14: "Home-based estimation of vision was consistent with an acuity of at least 0.4 logMAR (6/15), although not as good as 0.1 logMAR (6/7.5)",
+                        15: "Home-based estimation of vision was consistent with an acuity of at least 0.4 logMAR (6/15), although not as good as 0.1 logMAR (6/7.5)",
+                        16: "Home-based estimation of vision was consistent with an acuity of at least 0.1 logMAR (6/7.5)",
+                        17: "Home-based estimation of vision was consistent with an acuity of at least 0.1 logMAR (6/7.5)",
+                        18: "Home-based estimation of vision was consistent with an acuity of at least 0.1 logMAR (6/7.5)"
+                    },
+                    190: {
+                        0: "Home-based estimation of vision was consistent with an acuity of less than 1.2 logMAR (6/96)",
+                        1: "Home-based estimation of vision was consistent with an acuity of at least 1.2 logMAR (6/96), although not as good as 0.9 logMAR (6/48)",
+                        2: "Home-based estimation of vision was consistent with an acuity of at least 1.2 logMAR (6/96), although not as good as 0.9 logMAR (6/48)",
+                        3: "Home-based estimation of vision was consistent with an acuity of at least 1.2 logMAR (6/96), although not as good as 0.9 logMAR (6/48)",
+                        4: "Home-based estimation of vision was consistent with an acuity of at least 0.9 logMAR (6/48), although not as good as 0.6 logMAR (6/24)",
+                        5: "Home-based estimation of vision was consistent with an acuity of at least 0.9 logMAR (6/48), although not as good as 0.6 logMAR (6/24)",
+                        6: "Home-based estimation of vision was consistent with an acuity of at least 0.9 logMAR (6/48), although not as good as 0.6 logMAR (6/24)",
+                        7: "Home-based estimation of vision was consistent with an acuity of at least 0.9 logMAR (6/48), although not as good as 0.6 logMAR (6/24)",
+                        8: "Home-based estimation of vision was consistent with an acuity of at least 0.6 logMAR (6/24), although not as good as 0.3 logMAR (6/12)",
+                        9: "Home-based estimation of vision was consistent with an acuity of at least 0.6 logMAR (6/24), although not as good as 0.3 logMAR (6/12)",
+                        10: "Home-based estimation of vision was consistent with an acuity of at least 0.6 logMAR (6/24), although not as good as 0.3 logMAR (6/12)",
+                        11: "Home-based estimation of vision was consistent with an acuity of at least 0.6 logMAR (6/24), although not as good as 0.3 logMAR (6/12)",
+                        12: "Home-based estimation of vision was consistent with an acuity of at least 0.3 logMAR (6/12), although not as good as 0.0 logMAR (6/6)",
+                        13: "Home-based estimation of vision was consistent with an acuity of at least 0.3 logMAR (6/12), although not as good as 0.0 logMAR (6/6)",
+                        14: "Home-based estimation of vision was consistent with an acuity of at least 0.3 logMAR (6/12), although not as good as 0.0 logMAR (6/6)",
+                        15: "Home-based estimation of vision was consistent with an acuity of at least 0.3 logMAR (6/12), although not as good as 0.0 logMAR (6/6)",
+                        16: "Home-based estimation of vision was consistent with an acuity of at least 0.0 logMAR (6/6)",
+                        17: "Home-based estimation of vision was consistent with an acuity of at least 0.0 logMAR (6/6)",
+                        18: "Home-based estimation of vision was consistent with an acuity of at least 0.0 logMAR (6/6)",
+                    }
+                };
+                if (parseInt(viewDistance) === 150 || parseInt(viewDistance) === 190) {
+                    document.getElementById("result").innerHTML = "<p style='text-decoration: underline; font-weight: bold'>Correct score of " + score + " from " + viewDistance +" cm:</p>" +
+                    "<p>" + scores[viewDistance][score] + "</p>";
+                    // Update styling of the notice
+                    document.getElementById("result").classList.remove("alert-danger");
+                    document.getElementById("result").classList.add("alert-primary");
+                } else {
+                    // No radio button selected, or some kind of strange issue
+
+                    document.getElementById("result").innerHTML = "The viewing distance must be 150cm or 190cm.";
+                    document.getElementById("result").classList.remove("alert-primary");
+                    document.getElementById("result").classList.add("alert-danger");
+                }
+            }
+        }
+    }
+</script>
+
+<p>To score the vision of your patient, please select below the viewing distance used for the test. Then, enter the number of letters correctly read.</p>
+<div class="alert alert-dark"><label for="viewDistance150" style="font-weight: bold">Viewing distance</label><br/>
+    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="viewDistance" id="viewDistance150" value="150" onclick="return updateScore();" checked="checked" /><label class="form-check-label" for="viewDistance150">150cm</label></div>
+    <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="viewDistance" id="viewDistance190" value="190" onclick="return updateScore();" /><label class="form-check-label" for="viewDistance190">190cm</label></div><br/><br/><label for="numLettersRead" style="font-weight: bold">Number of correctly read letters</label>
+    <div
+        class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="letterReadText">Correct:</span></div><input class="form-control" type="number" placeholder="5" min="0" max="18" id="numLettersRead" onchange="return updateScore();" /></div>
+<div class="alert alert-primary" id="result"
+    style="display: none"></div>
+</div>

@@ -1,0 +1,38 @@
+{% extends "base" %}
+
+{% block content %}
+
+<style type="text/css">
+    @font-face {
+        font-family: 'aukland';
+        src: url('/static/fonts/optotypes-webfont.woff2') format('woff2'),
+            url('/static/fonts/optotypes-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'sloan';
+        src: url('/static/fonts/sloan-webfont.woff2') format('woff2'),
+            url('/static/fonts/sloan-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+</style>
+
+<h1 class="mt-5 mb-4">Home Distance&nbsp;Vision Assessment&nbsp;Aid</h1>
+<p class="mb-4"><a href="/">&larr; Return to the homepage</a></p>
+<hr class="mt-4" />
+<h3 class="mb-3">View an answer sheet</h3>
+<p style="font-weight: bold">This is not a vision test.</p>
+<p>Below are the correct answers for the code "{{arrangement.code}}".</p>
+<p>To view the original form as a downloadable PDF,&nbsp;<a href="/generate?code={{arrangement.code}}">click here</a></p>
+
+{% include "scoring" %}
+
+{% for row in arrangement.rows %}
+    <div class="mb-5 text-nowrap" style="border: {{row.border_size}}rem solid black; font-size: {{row.text_size}}rem; text-align: center; font-family: {{arrangement.optotype_definition.name}}; letter-spacing: 0.2em;">
+        {% for letter in row.optotypes %}{{arrangement.optotype_definition.optotypes[letter]}}{% endfor %}
+    </div>
+{% endfor %}
+            
+{% endblock content %} 

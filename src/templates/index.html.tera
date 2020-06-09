@@ -1,0 +1,109 @@
+{% extends "base" %}
+
+{% block content %}
+<h1 class="mt-5 mb-5">Home Distance&nbsp;Vision Assessment&nbsp;Aid</h1>
+<p>The aim of the Home Distance Vision Assessment Aid project is to develop an accurate and low cost way to measure vision at home. It is currently a research tool – be aware that it is not yet a validated test of vision. You should only access this website
+    if you have been directed to.</p>
+<hr class="mt-4" />
+<h2 class="mb-3">Contents</h2>
+<ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#downloads">Downloads</a></li>
+    <li><a href="#patient-instructions">Patient instructions</a></li>
+    <li><a href="#clinician-instructions">Clinician instructions</a></li>
+    <li><a href="#feedback">Feedback/queries</a></li>
+    <li><a href="#references">References</a></li>
+    <li><a href="#privacypolicy">Privacy policy</a></li>
+</ul>
+<hr class="mt-4" />
+<h2 class="mb-3"><a name="about">About</a></h2>
+<p>Measuring distance vision at home is difficult, and there are few clinically validated and reliable methods of doing so. Digital solutions, including smartphone and tablet apps, provide a potential solution, but risk excluding those without access to
+    these devices. We aim eventually to produce a vision test that can be printed on A4 paper by the patient, or by the care provider and posted to the patient.</p>
+<p>Please be aware that the tests you can generate using this site are under development, and not validated for clinical use. We are currently exploring how reproducible the test is on different printers, and following that hope to determine how well vision
+    measured in this way relates to vision measured on traditional tests of vision. We are grateful for feedback on how consistent the print size of the test is by comparison of the silhouette on page 2 of the printout to a credit card.</p>
+<p>If you do decide to use these printouts during a video consultation, for example, please consider them only as an aid as you might ask a patient in clinic to read some text to assess their visual performance.&nbsp;<span style="font-weight: bold">They are not validated tests of acuity.</span></p>
+
+<hr class="mt-4" />
+<h2 class="mb-3"><a name="downloads">Downloads</a></h2>
+
+<p>This site allows the generation of two different aids:</p>
+<ul>
+    <li>a standardised test - a simple download which will be the same every time. Ultimately this approach will be useful in patients performing the test only once or twice,</li>
+    <li><span style="font-style: italic">and;</span> a randomized test could be useful in patients who are regularly monitoring vision to help their judgement be unclouded by memories of previous readings.</li>
+</ul>
+<p class="mt-3">If the person taking the test cannot reliably identify letters, you should download the symbol test. If you're using the symbol test, you should practice the symbols using&nbsp;<a href="/static/DakinNamingSheet.pdf" target="_blank">this document.</a></p>
+
+<h3 class="mt-5 mb-3">1. Standardised assessment aids</h3>
+<p><a class="btn-primary btn" href="/test/generate?mode=telephone&code=RFDCAM">Download (Letters, Standardised)</a></p>
+<p><a class="btn-info btn" href="/test/generate?mode=telephone&code=EBC3JF">Download (Symbols, Standardised)</a></p>
+<h3 class="mt-5">2. Randomised assessment aids</h3>
+<p class="mb-3"><span style="font-weight: bold">Each time you need to repeat the test, click the correct link below to download a new version of the test sheet.</span> This means that the order of the letters will be changed each time you perform the test.</p>
+<h5 class="mt-3">Telephone assessment</h5>
+<p>These assessment aids can be identified using a simple 6 digit code that can easily be given over the telephone. They do not contain as many random combinations of letters as the postal/self assessment tests, but there are expected to be enough
+    combinations of letters to be sufficient for several years of weekly testing.</p>
+<p><a class="btn-primary btn" href="/test/generate?type=adult&mode=telephone">Download (Letters, Telephone)</a></p>
+<p><a class="btn-info btn" href="/test/generate?type=child&mode=telephone">Download (Symbols, Telephone)</a></p>
+<h5 class="mt-4">Postal/self assessment</h5>
+<p>These assessment aids have over a billion possible letter orderings. Each sheet is identified using a longer code (16 digits). This code contains information about the type of test being administered, the correct answers, and a code which allows
+    us to check for errors.</p>
+<p><a class="btn-primary btn" href="/test/generate?type=adult&mode=self">Download (Letters, Self-Assessment)</a></p>
+<p><a class="btn-info btn" href="/test/generate?type=child&mode=self">Download (Symbols, Self-Assessment)</a></p>
+
+
+<hr class="mt-4" />
+<h2 class="mb-3"><a name="patient-instructions">Patient instructions</a></h2>
+<p><span style="font-weight: bold">Download the version of the test that your clinician tells you to, and print it.</span></p>
+<p>Make sure to select "Full Size" or "100%" in the print settings when you're printing.</p>
+<ol>
+    <li>Check the chart size is correct by placing a bank card in the box on the second page. If you can hide the grey box but still see all of the black outline, the size is correct.</li>
+    <li>Fix this chart to a wall using Blu-Tac, at about eye level</li>
+    <li>Stand 150 cm (1.5 m or about 5 feet) away from the chart. (Use the string provided to measure this distance)</li>
+    <li>Follow the instructions given by the clinician on the telephone</li>
+</ol>
+<hr class="mt-4" />
+<h2 class="mb-3"><a name="clinician-instructions">Clinician instructions</a></h2>
+<p>The basic structure of the test is the same, regardless of which option you choose.</p>
+<h4 class="mt-4 mb-3">1. Choosing an assessment aid</h4>
+<p><span style="font-weight: bold">If you are testing a patient only once or twice:</span> you should use the standardised test downloads from above. These are always the same, so you can know the correct answer.</p>
+<p><span style="font-weight: bold">If you are testing a patient multiple times AND checking their answers during the test using telephone/video call:</span> you or the patient should use the telephone assessment from above. Using this assessment, the patient
+    can give you a 6 character code over the phone, which you can enter into&nbsp;<a href="/answers">this web page</a> to view the correct answers. This allows you to have the correct answers in front of you when the patient is reading the
+    chart over the phone.</p>
+<p><span style="font-weight: bold">If you are testing a patient multiple times AND asking them to self-check their answers, or post their answers in:</span> you should use the self-assessment test downloads from above. Each test is identified by a 16 character
+    code. This code allows you to identify the correct answers. To view the correct answers from a code, you should enter the code into&nbsp;<a href="/answers">this web page</a>.</p>
+<h4 class="mt-4 mb-3">2. Using the assessment aid</h4>
+<p>You should typically administer the test from 150cm, providing the patient with a pre-measured string to use for measuring this distance.</p>
+<p>At 150cm, the lines equate to 3/60, 6/60, 6/30, 6/15, 6/7.5.</p>
+<p>At 190cm, the lines equate to 6/96, 6/48, 6/24, 6/12, 6/6.</p>
+<p>If different parts of your clinic use different distances for testing, it is recommended that you colour code the string given to patients, using one colour per distance. This should be checked before each trial.</p>
+<h4 class="mt-4 mb-3">3. Viewing answer sheets</h4>
+<p>To mark answers from a patient, please use the link below and enter their test code to view the correct answers.</p><a class="btn btn-primary" href="/answers">View answer sheets</a>
+<h4 class="mt-4 mb-3">4. Scoring tests</h4>
+{% include "scoring" %}
+<hr class="mt-4" />
+<h2 class="mb-3"><a name="feedback">Feedback and queries</a></h2>
+<form action="https://formspree.io/xpzlgwwp" method="POST">
+    <div class="form-group"><label for="email">Your email:</label><input class="form-control" type="email" name="email" id="email" /></div>
+    <div class="form-group"><label for="name">Your name:</label><input class="form-control" type="text" name="name" id="name" /></div>
+    <div class="form-group"><label for="message">Your message:</label><textarea class="form-control" name="message" id="message"></textarea></div><input type="hidden" name="_next" value="https://homeacuitytest.com/received" /><button class="btn btn-primary" type="submit">Send</button></form>
+<hr
+    class="mt-4" />
+<h2 class="mb-3"><a name="references">References</a></h2>
+<p>Hamm LM, Yeoman JP, Anstice N, Dakin SC.&nbsp;<span style="font-style: italic">The Auckland Optotypes: An open-access pictogram set for measuring recognition acuity.</span> J Vis. 2018 Mar 1;18(3):13.&nbsp;<a href="https://www.ncbi.nlm.nih.gov/pubmed/29677328">PMID: 29677328</a></p>
+<hr
+    class="mt-4" />
+<h2 class="mb-3"><a name="privacypolicy">Privacy policy</a></h2>
+<p>We are committed to respecting your privacy. We collect only the reasonable minimum of data which allows us to understand the impact of this website ("the service") and monitor for abuse. This means that:</p>
+<ul>
+    <li>The service does not use cookies.</li>
+    <li>The service does not collect any personal information such as names, addresses, and email addresses.</li>
+    <li>When an assessment aid is downloaded, the service stores three pieces of information: (a) a unique identifier (the IP address of the user), (b) the type of sheet which is downloaded, and (c) the date and time of the download. This is to help detect
+        abuse of the service, and is not shared with any third parties.</li>
+    <li>Aggregated, non-identifying, usage data (for example, the number of users using the service in a particular time period) may be shared privately or publicly. The reasons for this include, but are by no means limited to: (a) understanding how the service
+        is used, (b) monitoring and sharing the impact of the service, and (c) understanding how to improve the service.</li>
+    <li>The service uses Formspree.io to process submissions on the contact form. Submitting the contact form therefore agrees to their privacy policy, which can be found&nbsp;<a href="https://docs.formspree.io/files/privacy.pdf">here</a>.</li>
+</ul>
+<p>By using the service, you agree to the collection and use of information in accordance with this policy.</p>
+
+{% endblock content %} 
+
+
