@@ -1,4 +1,4 @@
-use crate::codes::{NUM_ROWS, NUM_OPTOTYPES_ON_ROW, short::ShortCode};
+use crate::codes::{NUM_ROWS, NUM_OPTOTYPES_ON_ROW, short::ShortCode, long::LongCode};
 
 /// Stores the name, numeric ID, and possible optotypes for a particular
 /// group of optotypes.
@@ -17,21 +17,23 @@ pub struct OptotypeDefinition {
 
 /// Obtains optotype definition from the numeric ID of that parameter
 /// 
-/// This function defines the Sloan optotypes as a default set of optotypes
-/// for IDs which are not defined, because they are likely to be the most commonly
-/// used form of optotypes. The (likely equally valid) alternative is to panic when
+/// This function defaults to the optotype ID specified by DEFAULT_OPTOTYPES
+/// when the ID is not found. The (likely equally valid) alternative is to panic when
 /// an unknown ID is given.
 ///
 /// This is where new optotype definitions can be added. Please note that
 /// these optotype definitions must also be matched by a new CSS class in 
 /// `src/templates/answers.html.tera` defining a font-family with the same
 /// name as the optotype definition has.
+/// 
+/// Due to limitations on the amount of information which is possible to encode in the codes
+/// which identify a test, the OptotypeDefinition must contain 10 or fewer optotype characters.
 impl From<u32> for OptotypeDefinition {
     fn from(id: u32) -> Self {
         match id {
             0 => OptotypeDefinition { name: "aukland".to_string(), id: 0, optotypes:  vec!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']},
             1 => OptotypeDefinition { name: "sloan".to_string(), id: 1, optotypes:  vec!['C', 'D', 'H', 'K', 'N', 'O', 'R', 'S', 'V', 'Z']},
-            _ => OptotypeDefinition::from(1)
+            _ => OptotypeDefinition::from(DEFAULT_OPTOTYPES)
         }
     }
 }
@@ -128,7 +130,6 @@ impl From<ShortCode> for OptotypeArrangement {
                 }
             }
             // Insert the row
-
             let row_text_size = (NUM_ROWS - row) as f64;
             rows.push(OptotypeRow {
                 text_size: row_text_size,
@@ -147,6 +148,39 @@ impl From<ShortCode> for OptotypeArrangement {
         }
     }
 }
+
+
+impl From<LongCode> for OptotypeArrangement {
+    fn from(code: LongCode) -> Self {
+        let mut optotype_rows: Vec<OptotypeRow> = Vec::new();
+        let mut optotype_index = 0;
+        // The order of the list of optotypes needs to be reversed for this chart, because the rows are generated top-down,
+        // but the list of optotypes is stored from the bottom-up.
+        let mut optotype_list = code.optotypes.clone();
+        optotype_list.reverse();
+        for row in 0..NUM_ROWS {
+            let mut optotypes: Vec<u8> = Vec::new();
+            for _ in 0..NUM_OPTOTYPES_ON_ROW[row] {
+                optotypes.push(optotype_list[optotype_index]);
+                optotype_index += 1;
+            }
+            optotypes.reverse();
+            let row_text_size = (NUM_ROWS - row) as f64;
+            optotype_rows.push(OptotypeRow {
+                border_size: row_text_size/5.0,
+                text_size: row_text_size,
+                optotypes: optotypes
+            });
+        }
+        // Return the arrangement that was just generated
+        OptotypeArrangement {
+            code: code.to_string(),
+            optotype_definition: code.optotype_definition,
+            rows: optotype_rows
+        }
+    }
+}
+
 
 // This is just a helper function for use in calculating the number of potential optotype combinations that exist on a given row.
 // It's a simple implementation of the factorial function

@@ -2,6 +2,7 @@ use std::fmt;
 use std::error::Error;
 
 pub mod short;
+pub mod long;
 pub mod crc;
 
 /// NUM_ROWS defines how many rows are on the chart. However, adding more rows would also
@@ -36,6 +37,25 @@ pub fn get_number_from_code(code: String) -> Option<u128> {
         
     }
     return Some(sum);
+}
+
+/// Convert a number into the characters in the base-32 encoded representation of that number.
+/// This zero-pads the output to the length specified in len.
+pub fn get_code_from_number(mut x: u128, len: usize) -> Vec<char> {
+    let mut result = vec!['A'; len];
+    for i in 0..len {
+        if x > 0 {
+            result[i] = BASE[(x % 32) as usize];
+            x /= 32;
+        } else {
+            // Zero-pad the result to the required length
+            result[i] = BASE[0];
+        }
+    }
+    // The base-32 formatted representation was little-endian (LSB first) but the codes given to users
+    // follow network byte order (big-endian, MSB first). Reversing the code vector allows this to take place.
+    result.reverse();
+    return result;
 }
 
 /// Finds the value of a particular character in the custom base 32 alphabet.

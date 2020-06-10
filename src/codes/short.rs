@@ -10,10 +10,10 @@ use std::str;
 /// over the phone.
 #[derive(Debug, PartialEq)]
 pub struct ShortCode {
-    /// Version is either 0 or 1. This determines what method was used to parse the code.
+    /// Version is either 0 or 1. This determines what format the information within the code is in.
     /// At present, only version 0 is implemented, and so the version field is ignored for now.
     pub version: u1,
-    /// Represents the set of optotypes encoded by a particular code. By default, this is either "child", or "adult"
+    /// Represents the set of optotypes encoded by a particular code.
     pub optotype_definition: OptotypeDefinition,
     /// Represents the "seed" used to generate the chart, which ranges from 0 to 255
     pub start_row: u8,
@@ -26,17 +26,10 @@ pub struct ShortCode {
 /// are easier to remember (via chunking, see https://doi.org/10.1037/h0043158 for a discussion).
 impl ToString for ShortCode {
     fn to_string(&self) -> String {
-        let mut x = u32::from(self.get_numerical_representation());
-        let mut result = vec![];
-        loop {
-            result.push(super::BASE[(x % 32) as usize]);
-            x /= 32;
-            if x == 0 {
-                break;
-            }
-        }
+        let x = u32::from(self.get_numerical_representation());
+        let mut result = super::get_code_from_number(x as u128, 6);
         result.insert(3, '-');
-        return result.iter().rev().collect::<String>();
+        return result.iter().collect::<String>();
     }
 }
 
@@ -53,7 +46,7 @@ impl FromStr for ShortCode {
             None => { return Err(super::CodeError("Failed to parse short code. It may have contained invalid characters.".into())); }
         };
         // Double check the encoded number is in the right range (0 to 2^30 - 1)
-        if num > 1073741823 {
+        if num > 2_u128.pow(30) - 1 {
             return Err(super::CodeError("Code did not encode a number within a valid range.".into()));
         }
         // Calculate the fields via bitshifts - they're all fixed-width
@@ -83,7 +76,7 @@ impl FromStr for ShortCode {
         let message_crc = u6::new((num & 63 << 0) as u8);
         let calculated_crc = processed_code.get_crc();
         if message_crc != calculated_crc {
-            return Err(super::CodeError("The code was entered incorrectly (CRC mismatch).".into()));
+            return Err(super::CodeError(format!("The short code was entered incorrectly (CRC mismatch. Code contained CRC {}, but the calculated value was {}).", message_crc, calculated_crc)));
         }
         Ok(processed_code)
     }
@@ -115,6 +108,10 @@ impl ShortCode {
     /// use of the wasted bit, which is currently set to 0.
     pub fn get_crc(&self) -> u6 {
         let mut crc: u8 = 0;
+        // For compatibility reasons, we first parse this into a string representation of the binary
+        // When the test is transitioned to v1 shortcodes, this should be be changed to just take each
+        // byte of the actual underlying number (the u24 numerical representation), rather than doing
+        // a checksum of the characters in the string representation of the binary.
         for byte in format!("{:0>24b}", self.get_numerical_representation_without_crc()).chars() {
             crc = crc::CRC8_TABLE[((crc ^ byte as u8) & 0xff) as usize] & 0xff;
         }
