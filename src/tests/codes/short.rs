@@ -62,7 +62,7 @@ fn parse_bad_offsets_code() {
 fn parse_invalid_crc() {
     let parsed_shortcode = ShortCode::from_str("RFD-CAL");
     match parsed_shortcode {
-        Ok(_) => { panic!("A short code encoding an out-of-range value was successfully parsed."); },
+        Ok(_) => { panic!("A short code with an invalid CRC was successfully parsed."); },
         Err(e) => { assert_eq!(format!("{}", e), "Error: The short code was entered incorrectly (CRC mismatch. Code contained CRC 10, but the calculated value was 11).".to_string())}
     }
 }
@@ -77,7 +77,8 @@ fn check_crc() {
     assert_eq!(parsed_shortcode.get_crc(), u6::new(11));
 }
 
-
+/// Check an intermediary stage of the coding/decoding: the numerical representation
+/// of the information contained within the shortcode.
 #[test]
 fn check_numerical_representation() {
     let expected_value = u30::new(508659723);
@@ -94,4 +95,10 @@ fn check_serialisation() {
     let expected_value = "RFD-CAM".to_string();
     let serialised_code = get_test_shortcode().to_string();
     assert_eq!(serialised_code, expected_value);
+}
+
+/// Check the debug serialisation
+#[test]
+fn check_debug() {
+    println!("{:?}", get_test_shortcode());
 }

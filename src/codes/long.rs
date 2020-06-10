@@ -1,4 +1,4 @@
-use crate::optotypes::OptotypeDefinition;
+use crate::optotypes::{OptotypeDefinition, OptotypeArrangement};
 use crate::codes::{NUM_OPTOTYPES_ON_ROW, crc, CodeError};
 use ux::{u2, u4};
 use std::str::FromStr;
@@ -63,7 +63,7 @@ impl FromStr for LongCode {
         // Convert the base-32 code into the number it encodes
         let num = match super::get_number_from_code(code.to_string()) {
             Some(binary) => { binary },
-            None => { return Err(CodeError("Failed to parse the long code. It may have contained invalid characters.".into())); }
+            None => { return Err(CodeError("Failed to parse long code. It may have contained invalid characters.".into())); }
         };
         // Check the number encoded: it shouldn't exceed 2^80 - 1 unless something has gone very wrong
         if num > 2_u128.pow(80) - 1 {
@@ -152,6 +152,29 @@ impl LongCode {
     }
 }
 
+/// This function is a helper to calculate the number of body blocks (each storing 9 optotypes) needed to store
+/// the arrangement of optotypes that the user has specified.
 pub fn get_num_body_blocks() -> usize {
     ((NUM_OPTOTYPES_ON_ROW.iter().sum::<u32>() as f64) / 9.0).round() as usize
+}
+
+/// Convert an OptotypeArrangement into the LongCode which encodes it. Every possible
+/// arrangement of optotypes has a corresponding LongCode, so this is always possible - unlike
+/// for the shorter ("telephone") codes which can only represent a subset of possible arrangements.
+impl From<OptotypeArrangement> for LongCode {
+    fn from(optotype_arrangement: OptotypeArrangement) -> Self {
+        // Move all the optotypes in the arrangement into a list
+        let mut optotype_list: Vec<u8> = Vec::new();
+        for optotype_row in optotype_arrangement.rows {
+            for optotype in optotype_row.optotypes {
+                optotype_list.push(optotype);
+            }
+        }
+        // Then obtain the LongCode object
+        LongCode {
+            version: u2::new(0_u8),
+            optotype_definition: optotype_arrangement.optotype_definition,
+            optotypes: optotype_list
+        }
+    }
 }

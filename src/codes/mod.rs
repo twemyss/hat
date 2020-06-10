@@ -67,7 +67,7 @@ pub fn get_character_value(character: char) -> Option<usize> {
 
 /// This struct is used to represent errors when parsing codes given by users.
 #[derive(Debug)]
-pub struct CodeError(String);
+pub struct CodeError(pub String);
 impl fmt::Display for CodeError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Error: {}", self.0)

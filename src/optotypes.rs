@@ -149,7 +149,17 @@ impl From<ShortCode> for OptotypeArrangement {
     }
 }
 
+/// This is just a helper function for use in calculating the number of potential optotype combinations that exist on a given row.
+/// It's a simple implementation of the factorial function
+fn factorial(n: u32) -> u32 {
+    match n {
+        0 => 1,
+        1 => 1,
+        _ => factorial(n - 1) * n,
+    }
+}
 
+/// Convert a LongCode into the arrangement of optotypes encoded within it
 impl From<LongCode> for OptotypeArrangement {
     fn from(code: LongCode) -> Self {
         let mut optotype_rows: Vec<OptotypeRow> = Vec::new();
@@ -178,16 +188,5 @@ impl From<LongCode> for OptotypeArrangement {
             optotype_definition: code.optotype_definition,
             rows: optotype_rows
         }
-    }
-}
-
-
-// This is just a helper function for use in calculating the number of potential optotype combinations that exist on a given row.
-// It's a simple implementation of the factorial function
-fn factorial(n: u32) -> u32 {
-    match n {
-        0 => 1,
-        1 => 1,
-        _ => factorial(n - 1) * n,
     }
 }
