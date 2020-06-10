@@ -1,4 +1,4 @@
-use crate::codes::short::ShortCode;
+use crate::codes::{NUM_ROWS, short::ShortCode};
 use crate::optotypes::OptotypeDefinition;
 use crate::tests::get_test_shortcode;
 use ux::{u6,u30};
@@ -9,7 +9,12 @@ use std::str::FromStr;
 #[test]
 fn random_short_code() {
     let new_shortcode = ShortCode::generate_random(OptotypeDefinition::from(1));
+    // Check serialisation
     assert_eq!(new_shortcode.to_string().len(), 7);
+    // Check the optotype definition is correct
+    assert_eq!(new_shortcode.optotype_definition.id, 1);
+    // Check the number of rows is correct
+    assert_eq!(new_shortcode.offsets.len(), NUM_ROWS - 1);
 }
 
 /// Check the parsing of a particular shortcode with known stored data.
@@ -58,7 +63,7 @@ fn parse_invalid_crc() {
     let parsed_shortcode = ShortCode::from_str("RFD-CAL");
     match parsed_shortcode {
         Ok(_) => { panic!("A short code encoding an out-of-range value was successfully parsed."); },
-        Err(e) => { assert_eq!(format!("{}", e), "Error: The code was entered incorrectly (CRC mismatch).".to_string())}
+        Err(e) => { assert_eq!(format!("{}", e), "Error: The short code was entered incorrectly (CRC mismatch. Code contained CRC 10, but the calculated value was 11).".to_string())}
     }
 }
 
