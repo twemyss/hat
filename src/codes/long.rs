@@ -166,10 +166,11 @@ impl From<OptotypeArrangement> for LongCode {
         // Move all the optotypes in the arrangement into a list
         let mut optotype_list: Vec<u8> = Vec::new();
         for optotype_row in optotype_arrangement.rows {
-            for optotype in optotype_row.optotypes {
-                optotype_list.push(optotype);
+            for optotype in optotype_row.optotypes.iter().rev() {
+                optotype_list.push(*optotype);
             }
         }
+        optotype_list.reverse();
         // Then obtain the LongCode object
         LongCode {
             version: u2::new(0_u8),

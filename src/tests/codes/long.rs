@@ -1,5 +1,6 @@
 use crate::codes::long::LongCode;
 use crate::tests::get_test_longcode;
+use crate::optotypes::{OptotypeArrangement, OptotypeDefinition, OptotypeRow};
 use ux::u4;
 use std::str::FromStr;
 
@@ -78,4 +79,55 @@ fn check_serialisation() {
 #[test]
 fn check_debug() {
     println!("{:?}", get_test_longcode());
+}
+
+/// Check converting the longcode into an optotype arrangement
+#[test]
+fn check_longcode_into_optotype_arrangement() {
+    let longcode = LongCode::from_str("FFT7-CVBJ-8ZV8-ALWE").unwrap();
+    let expected_arrangement = expected_longcode_arrangement();
+    assert_eq!(expected_arrangement, OptotypeArrangement::from(longcode));
+}
+
+// Check converting an OptotypeArrangement into a LongCode
+#[test]
+fn check_optotype_arrangement_into_longcode() {
+    let longcode = LongCode::from(expected_longcode_arrangement());
+    let expected_value = get_test_longcode();
+    assert_eq!(longcode, expected_value);
+}
+
+/// Get the expected arrangement for default longcode (FFT7-CVBJ-8ZV8-ALWE)
+pub fn expected_longcode_arrangement() -> OptotypeArrangement {
+    OptotypeArrangement {
+        code: "FFT7-CVBJ-8ZV8-ALWE".to_string(),
+        optotype_definition: OptotypeDefinition::from(0),
+        rows: vec![
+            OptotypeRow {
+                optotypes: vec![7, 0],
+                text_size: 5.0,
+                border_size: 1.0
+            },
+            OptotypeRow {
+                optotypes: vec![9, 5, 0, 2],
+                text_size: 4.0,
+                border_size: 0.8
+            },
+            OptotypeRow {
+                optotypes: vec![5, 0, 4, 2],
+                text_size: 3.0,
+                border_size: 0.6
+            },
+            OptotypeRow {
+                optotypes: vec![0, 1, 8, 7],
+                text_size: 2.0,
+                border_size: 0.4
+            },
+            OptotypeRow {
+                optotypes: vec![1, 7, 3, 6],
+                text_size: 1.0,
+                border_size: 0.2
+            }
+        ]
+    }
 }

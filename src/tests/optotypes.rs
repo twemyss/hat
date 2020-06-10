@@ -27,3 +27,28 @@ fn check_arrangement() {
 fn check_fallback() {
     assert_eq!(OptotypeDefinition::from(50), OptotypeDefinition::from(DEFAULT_OPTOTYPES));
 }
+
+/// Check the debug trait on OptotypeDefinitions
+#[test]
+fn check_debug() {
+    println!("{:?}", OptotypeDefinition::from(50));
+}
+
+/// Check the PartialEq trait on OptotypeRows, which is required to check if 
+/// two rows are the same
+#[test]
+fn check_compare_optotype_row() {
+    let row_one = OptotypeRow {
+        text_size: 1.0,
+        border_size: 1.0,
+        optotypes: vec![1, 2, 3]
+    };
+    let row_two = OptotypeRow {
+        text_size: 1.0,
+        border_size: 1.0,
+        optotypes: vec![1, 2, 3]
+    };
+    if row_one != row_two {
+        panic!("Two identical rows did not appear to be the same when compared.");
+    }
+}
