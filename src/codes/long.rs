@@ -1,8 +1,9 @@
 use crate::optotypes::{OptotypeDefinition, OptotypeArrangement};
-use crate::codes::{NUM_OPTOTYPES_ON_ROW, crc, CodeError};
+use crate::codes::{NUM_OPTOTYPES_ON_ROW, NUM_ROWS, crc, CodeError};
 use ux::{u2, u4};
 use std::str::FromStr;
 use std::str;
+use rand::Rng;
 
 /// Represents the data encoded in a long HAT code. Long HAT codes are slightly different in format the short HAT codes.
 /// The idea behind these codes is that they can be used by someone to check their own answers. They allow encoding more potential
@@ -121,6 +122,7 @@ impl LongCode {
         // u16 intermediates, which must then be cast into u8 for conversion into the u4 which is returned.
         return u4::new((u16::from(self.version) << 2 | (self.optotype_definition.id as u16)) as u8);
     }
+    /// Obtain the body of the LongCode, which is that part that encodes the optotypes shown on the page
     pub fn get_body(&self) -> u64 {
         let mut body: u64 = 0;
         let mut optotype_idx = 0;
@@ -136,7 +138,7 @@ impl LongCode {
         }
         return body;
     }
-    // This is a CRC-16/ARC of the body (optotypes) and the header of the long code.
+    /// This is a CRC-16/ARC of the body (optotypes) and the header of the long code.
     pub fn get_crc(&self) -> u16 {
         let mut crc: u16 = 0;
         // For compatibility reasons, we first parse this into a string representation of the binary
@@ -149,6 +151,34 @@ impl LongCode {
         // Dividing and rounding is likely a bit slower than doing a bitshift would be,
         // but it maintains backwards compatibility with codes already issued in the older software.
         return (crc as f32).round() as u16
+    }
+    /// Generates a random new shortcode for the specificed optotypes
+    pub fn generate_random(optotypes: OptotypeDefinition) -> LongCode {
+        // Generate row offsets
+        let mut optotype_list: Vec<u8> = Vec::new();
+        for row in 0..NUM_ROWS {
+            let mut row_optotypes: Vec<u8> = Vec::new();
+            let mut num_unique_optotypes_on_row = 0;
+            while num_unique_optotypes_on_row < NUM_OPTOTYPES_ON_ROW[row] {
+                // Generate a random optotype
+                let optotype = rand::thread_rng().gen_range(0, optotypes.optotypes.len()) as u8;
+                // Check if it was already on row
+                if !row_optotypes.contains(&optotype) {
+                    // If not, then append it and move on
+                    row_optotypes.push(optotype);
+                    num_unique_optotypes_on_row += 1;
+                }
+                // Otherwise, generate a new optotype to try
+            }
+            optotype_list.append(&mut row_optotypes);
+        }
+        optotype_list.reverse();
+        // Return representation of the shortcode
+        LongCode {
+            version: u2::new(0),
+            optotype_definition: optotypes,
+            optotypes: optotype_list
+        }
     }
 }
 

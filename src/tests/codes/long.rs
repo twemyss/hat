@@ -1,7 +1,7 @@
-use crate::codes::long::LongCode;
+use crate::codes::{long::LongCode, NUM_OPTOTYPES_ON_ROW, NUM_ROWS};
 use crate::tests::get_test_longcode;
 use crate::optotypes::{OptotypeArrangement, OptotypeDefinition, OptotypeRow};
-use ux::u4;
+use ux::{u2, u4};
 use std::str::FromStr;
 
 /// Check the parsing of a particular long code with known stored data.
@@ -95,6 +95,43 @@ fn check_optotype_arrangement_into_longcode() {
     let longcode = LongCode::from(expected_longcode_arrangement());
     let expected_value = get_test_longcode();
     assert_eq!(longcode, expected_value);
+}
+
+/// Test the generation of random longcodes, in particular sampling 1000 random distributions and 
+/// checking that the row does not contain repeated characters in any of them.
+#[test]
+pub fn test_randomised_longcode() {
+    for code_id in 0..1 {
+        for _ in 0..1000 {
+            let randomised_longcode = LongCode::generate_random(OptotypeDefinition::from(code_id));
+            // Check the optotype ID was carried across correctly
+            assert_eq!(randomised_longcode.optotype_definition.id, code_id as u8);
+            // Check there were the correct number of optotypes generated
+            let expected_num_optotypes = NUM_OPTOTYPES_ON_ROW.iter().sum::<u32>();
+            let generated_num_optotypes = randomised_longcode.optotypes.len() as u32;
+            assert_eq!(generated_num_optotypes, expected_num_optotypes);
+            // Check the version is set to 0
+            assert_eq!(randomised_longcode.version, u2::new(0));
+            // Check for duplicates
+            let mut optotype_idx = generated_num_optotypes;
+            for row in 0..NUM_ROWS {
+                let mut optotypes_on_row: Vec<u8> =  Vec::new();
+                for _ in 0..NUM_OPTOTYPES_ON_ROW[row] {
+                    optotypes_on_row.push(randomised_longcode.optotypes[(optotype_idx - 1) as usize]);
+                    optotype_idx -= 1;
+                }
+                // Check there weren't duplicates
+                let mut sorted_optotypes_on_row = optotypes_on_row.clone();
+                sorted_optotypes_on_row.sort();
+                sorted_optotypes_on_row.dedup();
+                if optotypes_on_row.len() != sorted_optotypes_on_row.len() {
+                    println!("{:?}", randomised_longcode.optotypes);
+                    panic!("Duplicates detected on row: {:?}", optotypes_on_row);
+                }
+            }
+        }
+    }
+    
 }
 
 /// Get the expected arrangement for default longcode (FFT7-CVBJ-8ZV8-ALWE)

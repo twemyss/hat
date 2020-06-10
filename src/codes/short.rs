@@ -128,7 +128,7 @@ impl ShortCode {
         let crc = self.get_crc();
         return u30::new(u32::from(data_body << 6) | u32::from(crc << 0));
     }
-    /// Generates a random new shortcode for the specificed optotypes
+    /// Generates a random new shortcode for the specified optotypes
     pub fn generate_random(optotypes: OptotypeDefinition) -> ShortCode {
         // Generate row offsets
         let mut offsets: [u4; NUM_ROWS-1] = [u4::new(0); NUM_ROWS-1];
