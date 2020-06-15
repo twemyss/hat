@@ -14,8 +14,26 @@ This codebase generates and serves PDFs containing random arrangements of optoty
 
 ## Configuration
 
-Todo: add configuration here, including how to add optotypes.
+We suggest using the free web version of this tool, which we host at [homeacuitytest.org](https://homeacuitytest.org). However, you can also install and run this tool locally, although some Linux experience is required.
+
+## Running the HAT server
+
+This server runs on Rust. To install Rust on a linux machine, follow the instructions [here](https://www.rust-lang.org/tools/install). Then, switch to Rust nightly by running:
+
+```
+rustup default nightly
+```
+
+To install and run the HAT server:
+
+```
+git clone https://github.com/twemyss/hat
+cd hat
+cargo run
+```
+
+You may wish to place the HAT server behind NGINX or Caddy reverse proxies in order to have SSL.
 
 ## References
 
-Todo: add references here.
+Please note that the fonts included with this code are licenced under separate licences. To view the licences for the fonts, navigate to `/static/fonts`.

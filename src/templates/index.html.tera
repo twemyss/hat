@@ -34,20 +34,20 @@
 <p class="mt-3">If the person taking the test cannot reliably identify letters, you should download the symbol test. If you're using the symbol test, you should practice the symbols using&nbsp;<a href="/static/DakinNamingSheet.pdf" target="_blank">this document.</a></p>
 
 <h3 class="mt-5 mb-3">1. Standardised assessment aids</h3>
-<p><a class="btn-primary btn" href="/test/generate?mode=telephone&code=RFDCAM">Download (Letters, Standardised)</a></p>
-<p><a class="btn-info btn" href="/test/generate?mode=telephone&code=EBC3JF">Download (Symbols, Standardised)</a></p>
+<p><a class="btn-primary btn" href="/generate?code=RFDCAM">Download (Letters, Standardised)</a></p>
+<p><a class="btn-info btn" href="/generate?code=EBC3JF">Download (Symbols, Standardised)</a></p>
 <h3 class="mt-5">2. Randomised assessment aids</h3>
 <p class="mb-3"><span style="font-weight: bold">Each time you need to repeat the test, click the correct link below to download a new version of the test sheet.</span> This means that the order of the letters will be changed each time you perform the test.</p>
 <h5 class="mt-3">Telephone assessment</h5>
 <p>These assessment aids can be identified using a simple 6 digit code that can easily be given over the telephone. They do not contain as many random combinations of letters as the postal/self assessment tests, but there are expected to be enough
     combinations of letters to be sufficient for several years of weekly testing.</p>
-<p><a class="btn-primary btn" href="/test/generate?type=adult&mode=telephone">Download (Letters, Telephone)</a></p>
-<p><a class="btn-info btn" href="/test/generate?type=child&mode=telephone">Download (Symbols, Telephone)</a></p>
+<p><a class="btn-primary btn" href="/generate?type=adult&mode=telephone">Download (Letters, Telephone)</a></p>
+<p><a class="btn-info btn" href="/generate?type=child&mode=telephone">Download (Symbols, Telephone)</a></p>
 <h5 class="mt-4">Postal/self assessment</h5>
 <p>These assessment aids have over a billion possible letter orderings. Each sheet is identified using a longer code (16 digits). This code contains information about the type of test being administered, the correct answers, and a code which allows
     us to check for errors.</p>
-<p><a class="btn-primary btn" href="/test/generate?type=adult&mode=self">Download (Letters, Self-Assessment)</a></p>
-<p><a class="btn-info btn" href="/test/generate?type=child&mode=self">Download (Symbols, Self-Assessment)</a></p>
+<p><a class="btn-primary btn" href="/generate?type=adult&mode=self">Download (Letters, Self-Assessment)</a></p>
+<p><a class="btn-info btn" href="/generate?type=child&mode=self">Download (Symbols, Self-Assessment)</a></p>
 
 
 <hr class="mt-4" />

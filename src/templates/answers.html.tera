@@ -4,16 +4,9 @@
 
 <style type="text/css">
     @font-face {
-        font-family: 'aukland';
-        src: url('/static/fonts/optotypes-webfont.woff2') format('woff2'),
-            url('/static/fonts/optotypes-webfont.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-    @font-face {
-        font-family: 'sloan';
-        src: url('/static/fonts/sloan-webfont.woff2') format('woff2'),
-            url('/static/fonts/sloan-webfont.woff') format('woff');
+        font-family: 'optotypes';
+        src: url('/static/fonts/{{arrangement.optotype_definition.name}}-webfont.woff2') format('woff2'),
+            url('/static/fonts/{{arrangement.optotype_definition.name}}-webfont.woff') format('woff');
         font-weight: normal;
         font-style: normal;
     }
@@ -30,7 +23,7 @@
 {% include "scoring" %}
 
 {% for row in arrangement.rows %}
-    <div class="mb-5 text-nowrap" style="border: {{row.border_size}}rem solid black; font-size: {{row.text_size}}rem; text-align: center; font-family: {{arrangement.optotype_definition.name}}; letter-spacing: 0.2em;">
+    <div class="mb-5 text-nowrap" style="border: {{row.border_size}}rem solid black; font-size: {{row.text_size}}rem; text-align: center; font-family: optotypes; letter-spacing: 0.2em;">
         {% for letter in row.optotypes %}{{arrangement.optotype_definition.optotypes[letter]}}{% endfor %}
     </div>
 {% endfor %}
