@@ -16,6 +16,8 @@ This codebase generates and serves PDFs containing random arrangements of optoty
 
 We suggest using the free web version of this tool, which we host at [homeacuitytest.org](https://homeacuitytest.org). However, you can also install and run this tool locally, although some Linux experience is required.
 
+This codebase is a re-write of the code at homeacuitytest.org with a focus on extensibility (supporting new optotypes), speed, and backwards compatibility. **This codebase is not yet complete.** For the original code used for the publication, please email the authors via the contact form at [homeacuitytest.org](https://homeacuitytest.org).
+
 ## Running the HAT server
 
 This server runs on Rust. To install Rust on a linux machine, follow the instructions [here](https://www.rust-lang.org/tools/install). Then, switch to Rust nightly by running:
